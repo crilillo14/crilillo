@@ -1,0 +1,115 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+
+const navLinks = [
+  { href: '/blog', label: 'Writing' },
+  { href: '/about', label: 'About' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+
+const isHome = currentPath === '/';
+---
+
+<header class="pt-8 pb-6 mb-8">
+  <nav class="max-w-[var(--spacing-page)] mx-auto px-6 flex items-center justify-between">
+    <a
+      href="/"
+      class:list={[
+        'text-sm transition-colors duration-150',
+        isHome
+          ? 'text-[var(--color-text)]'
+          : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
+      ]}
+    >
+      Home
+    </a>
+    <ul class="flex items-center gap-8">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm transition-colors duration-150',
+              isActive(link.href)
+                ? 'text-[var(--color-text)]'
+                : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href="/cv.pdf"
+          target="_blank"
+          class="cv-link"
+          aria-label="My CV"
+        >
+          <svg class="cv-icon" width="16" height="20" viewBox="0 0 16 20" fill="none">
+            <path
+              d="M10 1H3C1.9 1 1 1.9 1 3V17C1 18.1 1.9 19 3 19H13C14.1 19 15 18.1 15 17V6L10 1Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 1V6H15"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="cv-label">my cv</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <hr class="mt-6 max-w-[var(--spacing-page)] mx-auto border-0 border-t border-[var(--color-border)]" />
+</header>
+
+<style>
+  .cv-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .cv-link:hover {
+    color: var(--color-text);
+  }
+
+  .cv-icon {
+    transition: transform 200ms ease;
+  }
+
+  .cv-link:hover .cv-icon {
+    transform: translateY(-1px);
+  }
+
+  .cv-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .cv-link:hover .cv-label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>

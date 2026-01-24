@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientLine from '../components/GradientLine.astro';
+import Socials from '../components/Socials.astro';
+---
+
+<BaseLayout title="About" description="About me and this site.">
+  <div class="max-w-[var(--spacing-prose)]">
+    <h1 class="font-serif text-4xl font-semibold mb-4">About</h1>
+    <GradientLine seed={17} class="mb-10" />
+
+    <div class="prose">
+      <p>
+        I'm a software engineer interested in building well-crafted software.
+        This site is a place for longer-form writing on topics that interest me.
+      </p>
+
+      <p>
+        The design philosophy here is intentionally minimal. Typography is the
+        primary design element, with a single accent color and generous whitespace
+        to let the content breathe.
+      </p>
+
+      <h2>Colophon</h2>
+
+      <p>
+        This site is built with <a href="https://astro.build">Astro</a>, styled
+        with <a href="https://tailwindcss.com">Tailwind CSS</a>, and set in
+        Source Serif 4, Inter, and IBM Plex Mono.
+      </p>
+    </div>
+
+    <div class="mt-16 pt-8 border-t border-[var(--color-border)]">
+      <Socials />
+    </div>
+  </div>
+</BaseLayout>

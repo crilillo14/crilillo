@@ -1,16 +1,162 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GenerativeHero from '../components/GenerativeHero.astro';
+import GradientLine from '../components/GradientLine.astro';
+import Socials from '../components/Socials.astro';
 
+const recentPosts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  });
+}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Cristobal Lillo">
+  <GenerativeHero seed={2024} height="140px" />
+
+  <div class="max-w-[var(--spacing-prose)]">
+    <!-- Intro -->
+    <section class="mb-20">
+      <h1 class="font-serif text-4xl font-semibold mb-2 leading-tight">
+        Cristobal Lillo
+      </h1>
+      <Socials class="mb-5" />
+      <p class="text-lg leading-relaxed text-[var(--color-muted)] mb-6">
+        Software engineer focused on building systems that work. Currently interested
+        in quantitative finance, distributed systems, and developer tools.
+      </p>
+      <p class="text-[var(--color-muted)]">
+        Based in Santiago, Chile.
+      </p>
+    </section>
+
+    <!-- Professional Experience -->
+    <section class="mb-20">
+      <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-muted)] mb-6">
+        Professional Experience
+      </h2>
+      <GradientLine seed={11} class="mb-8" />
+      <ul class="space-y-8">
+        <li>
+          <div class="flex items-baseline justify-between gap-4 mb-1">
+            <span class="font-serif text-lg font-medium">Company Name</span>
+            <span class="text-sm text-[var(--color-muted)] flex-shrink-0">2023 — Present</span>
+          </div>
+          <p class="text-[var(--color-muted)] text-sm mb-1">Software Engineer</p>
+          <p class="text-[var(--color-text)] text-sm leading-relaxed">
+            Brief description of your role and key accomplishments. Focus on impact
+            and technologies used.
+          </p>
+        </li>
+        <li>
+          <div class="flex items-baseline justify-between gap-4 mb-1">
+            <span class="font-serif text-lg font-medium">Previous Company</span>
+            <span class="text-sm text-[var(--color-muted)] flex-shrink-0">2021 — 2023</span>
+          </div>
+          <p class="text-[var(--color-muted)] text-sm mb-1">Software Engineer Intern</p>
+          <p class="text-[var(--color-text)] text-sm leading-relaxed">
+            Description of internship work, projects contributed to, and skills developed.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Personal Projects -->
+    <section class="mb-20">
+      <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-muted)] mb-6">
+        Personal Projects
+      </h2>
+      <GradientLine seed={29} class="mb-8" />
+      <ul class="space-y-6">
+        <li class="group">
+          <a href="#" class="block">
+            <div class="flex items-baseline justify-between gap-4">
+              <span class="font-serif text-lg font-medium group-hover:text-[var(--color-accent)] transition-colors duration-150">
+                Project Name
+              </span>
+              <span class="text-xs text-[var(--color-muted)] font-mono flex-shrink-0">
+                Python / C++
+              </span>
+            </div>
+            <p class="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
+              Brief description of what this project does and why it's interesting.
+            </p>
+          </a>
+        </li>
+        <li class="group">
+          <a href="#" class="block">
+            <div class="flex items-baseline justify-between gap-4">
+              <span class="font-serif text-lg font-medium group-hover:text-[var(--color-accent)] transition-colors duration-150">
+                Another Project
+              </span>
+              <span class="text-xs text-[var(--color-muted)] font-mono flex-shrink-0">
+                Rust
+              </span>
+            </div>
+            <p class="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
+              Description highlighting the technical challenges solved or novel approach taken.
+            </p>
+          </a>
+        </li>
+        <li class="group">
+          <a href="#" class="block">
+            <div class="flex items-baseline justify-between gap-4">
+              <span class="font-serif text-lg font-medium group-hover:text-[var(--color-accent)] transition-colors duration-150">
+                Third Project
+              </span>
+              <span class="text-xs text-[var(--color-muted)] font-mono flex-shrink-0">
+                TypeScript
+              </span>
+            </div>
+            <p class="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
+              What problem does this solve? What makes it unique?
+            </p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Writing -->
+    {recentPosts.length > 0 && (
+      <section>
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-sm font-medium uppercase tracking-wider text-[var(--color-muted)]">
+            Writing
+          </h2>
+          <a
+            href="/blog"
+            class="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-150"
+          >
+            View all &rarr;
+          </a>
+        </div>
+        <GradientLine seed={42} class="mb-8" />
+        <ul class="space-y-5">
+          {recentPosts.map((post) => (
+            <li class="flex items-baseline justify-between gap-4">
+              <a
+                href={`/blog/${post.id}`}
+                class="font-serif text-base hover:text-[var(--color-accent)] transition-colors duration-150 truncate"
+              >
+                {post.data.title}
+              </a>
+              <time
+                datetime={post.data.date.toISOString()}
+                class="text-sm text-[var(--color-muted)] flex-shrink-0"
+              >
+                {formatDate(post.data.date)}
+              </time>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</BaseLayout>

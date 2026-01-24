@@ -1,0 +1,179 @@
+---
+interface Props {
+  seed?: number;
+  height?: string;
+}
+
+const { seed = 42, height = '160px' } = Astro.props;
+
+const hue1 = (seed * 137.508) % 360;
+const hue2 = (hue1 + 35) % 360;
+const hue3 = (hue1 + 200) % 360;
+const turbulenceFreq = 0.003 + (seed % 10) * 0.0003;
+---
+
+<div class="generative-hero" style={`height: ${height};`}>
+  <svg class="hero-svg" viewBox="0 0 1600 300" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <filter id={`noise-${seed}`} x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency={turbulenceFreq}
+          numOctaves="4"
+          seed={seed}
+          stitchTiles="stitch"
+          result="noise"
+        />
+        <feColorMatrix type="saturate" values="0.4" result="desaturatedNoise" />
+        <feBlend in="SourceGraphic" in2="desaturatedNoise" mode="overlay" />
+      </filter>
+
+      <linearGradient id={`grad1-${seed}`} x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style={`stop-color: hsl(${hue1}, 85%, 55%); stop-opacity: 0.9`} />
+        <stop offset="45%" style={`stop-color: hsl(${hue2}, 80%, 50%); stop-opacity: 0.85`} />
+        <stop offset="100%" style={`stop-color: hsl(${hue3}, 75%, 45%); stop-opacity: 0.8`} />
+      </linearGradient>
+
+      <radialGradient id={`grad2-${seed}`} cx="15%" cy="80%" r="55%">
+        <stop offset="0%" style={`stop-color: hsl(${hue2}, 90%, 60%); stop-opacity: 0.85`} />
+        <stop offset="100%" style={`stop-color: hsl(${hue1}, 70%, 40%); stop-opacity: 0`} />
+      </radialGradient>
+
+      <radialGradient id={`grad3-${seed}`} cx="85%" cy="15%" r="50%">
+        <stop offset="0%" style={`stop-color: hsl(${hue3}, 85%, 65%); stop-opacity: 0.8`} />
+        <stop offset="100%" style={`stop-color: hsl(${hue2}, 60%, 35%); stop-opacity: 0`} />
+      </radialGradient>
+
+      <radialGradient id={`grad4-${seed}`} cx="50%" cy="50%" r="45%">
+        <stop offset="0%" style={`stop-color: hsl(${hue1 + 60}, 80%, 62%); stop-opacity: 0.7`} />
+        <stop offset="100%" style={`stop-color: hsl(${hue3}, 50%, 40%); stop-opacity: 0`} />
+      </radialGradient>
+
+      <filter id={`blur-${seed}`}>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="30" />
+      </filter>
+
+      <filter id={`goo-${seed}`}>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="goo" />
+      </filter>
+    </defs>
+
+    <rect width="100%" height="100%" fill="#fafafa" />
+
+    <!-- Liquid blobs -->
+    <g filter={`url(#blur-${seed})`}>
+      <g class="blob blob-1">
+        <ellipse cx="18%" cy="65%" rx="22%" ry="45%" fill={`url(#grad2-${seed})`} />
+      </g>
+      <g class="blob blob-2">
+        <ellipse cx="82%" cy="35%" rx="25%" ry="50%" fill={`url(#grad3-${seed})`} />
+      </g>
+      <g class="blob blob-3">
+        <ellipse cx="50%" cy="70%" rx="30%" ry="40%" fill={`url(#grad4-${seed})`} />
+      </g>
+      <g class="blob blob-4">
+        <ellipse cx="35%" cy="25%" rx="18%" ry="35%" fill={`url(#grad2-${seed})`} opacity="0.6" />
+      </g>
+      <rect width="100%" height="100%" fill={`url(#grad1-${seed})`} opacity="0.4" />
+    </g>
+
+    <rect width="100%" height="100%" filter={`url(#noise-${seed})`} opacity="0.15" />
+
+    <g stroke={`hsl(${hue1}, 50%, 45%)`} stroke-width="0.5" opacity="0.15">
+      <path d="M 50,250 Q 400,200 800,220 T 1550,180" fill="none" class="wave wave-1" />
+      <path d="M 0,180 Q 300,220 700,190 T 1600,230" fill="none" class="wave wave-2" />
+    </g>
+  </svg>
+
+</div>
+
+<style>
+  .generative-hero {
+    position: relative;
+    width: calc(100vw - 2rem);
+    margin-left: calc(-50vw + 50% + 1rem);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+    border-radius: 0.2rem;
+  }
+
+  @media (min-width: 768px) {
+    .generative-hero {
+      width: calc(100vw - 4rem);
+      margin-left: calc(-50vw + 50% + 2rem);
+    }
+  }
+
+  .hero-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Liquid animations */
+  .blob-1 {
+    animation: float-1 12s ease-in-out infinite;
+  }
+
+  .blob-2 {
+    animation: float-2 14s ease-in-out infinite;
+  }
+
+  .blob-3 {
+    animation: float-3 10s ease-in-out infinite;
+  }
+
+  .blob-4 {
+    animation: float-4 16s ease-in-out infinite;
+  }
+
+  .wave-1 {
+    animation: wave-flow-1 8s ease-in-out infinite;
+  }
+
+  .wave-2 {
+    animation: wave-flow-2 10s ease-in-out infinite;
+  }
+
+  @keyframes float-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(15px, -10px) scale(1.05); }
+    66% { transform: translate(-10px, 8px) scale(0.95); }
+  }
+
+  @keyframes float-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-12px, 12px) scale(0.97); }
+    66% { transform: translate(18px, -8px) scale(1.03); }
+  }
+
+  @keyframes float-3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(10px, -15px) scale(1.08); }
+  }
+
+  @keyframes float-4 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-8px, 10px) scale(1.02); }
+    75% { transform: translate(12px, -5px) scale(0.98); }
+  }
+
+  @keyframes wave-flow-1 {
+    0%, 100% { transform: translateX(0); opacity: 0.15; }
+    50% { transform: translateX(20px); opacity: 0.2; }
+  }
+
+  @keyframes wave-flow-2 {
+    0%, 100% { transform: translateX(0); opacity: 0.15; }
+    50% { transform: translateX(-15px); opacity: 0.1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob, .wave {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+const links = [
+  { name: 'GitHub', href: 'https://github.com/crilillo14' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/cristobal-lillo-176774268/'},
+];
+---
+
+<nav class:list={['socials', className]} aria-label="Social links">
+  {links.map((link, i) => (
+    <>
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {link.name}
+      </a>
+      {i < links.length - 1 && <span class="separator">/</span>}
+    </>
+  ))}
+</nav>
+
+<style>
+  .socials {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.01em;
+  }
+
+  .socials a {
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 150ms ease-in-out;
+  }
+
+  .socials a:hover {
+    color: var(--color-text);
+  }
+
+  .separator {
+    color: var(--color-border);
+    user-select: none;
+  }
+</style>
