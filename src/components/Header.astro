@@ -73,6 +73,19 @@ const isHome = currentPath === '/';
           <span class="cv-label">my cv</span>
         </a>
       </li>
+      <li class="donut-toggle-wrapper">
+        <button
+          id="donut-toggle"
+          class="donut-toggle"
+          aria-label="Toggle donut animation"
+          title="toggle donut anim"
+        >
+          <svg class="donut-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </button>
+      </li>
     </ul>
   </nav>
   <hr class="mt-6 max-w-[var(--spacing-page)] mx-auto border-0 border-t border-[var(--color-border)]" />
@@ -112,4 +125,60 @@ const isHome = currentPath === '/';
     opacity: 1;
     transform: translateX(0);
   }
+
+  .donut-toggle-wrapper {
+    display: none;
+  }
+
+  @media (min-width: 769px) {
+    .donut-toggle-wrapper {
+      display: block;
+    }
+  }
+
+  .donut-toggle {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-muted);
+    transition: color 200ms ease, opacity 200ms ease;
+  }
+
+  .donut-toggle:hover {
+    color: var(--color-text);
+  }
+
+  .donut-toggle.is-paused {
+    opacity: 0.4;
+  }
+
+  .donut-toggle.is-paused:hover {
+    opacity: 0.7;
+  }
+
+  .donut-icon {
+    transition: transform 200ms ease;
+  }
+
+  .donut-toggle:hover .donut-icon {
+    transform: rotate(20deg);
+  }
 </style>
+
+<script>
+  const toggle = document.getElementById('donut-toggle');
+  const donut = document.querySelector('.donut-bg') as HTMLIFrameElement;
+
+  if (toggle && donut) {
+    let isVisible = true;
+
+    toggle.addEventListener('click', () => {
+      isVisible = !isVisible;
+      donut.style.display = isVisible ? 'block' : 'none';
+      toggle.classList.toggle('is-paused', !isVisible);
+    });
+  }
+</script>

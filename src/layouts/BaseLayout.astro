@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import VectorField from '../components/VectorField.astro';
 
 interface Props {
   title: string;
@@ -26,7 +25,15 @@ const currentPath = Astro.url.pathname;
     <title>{title}</title>
   </head>
   <body class="min-h-screen flex flex-col">
-    <VectorField />
+    <iframe
+      src="/donut/index.html"
+      class="donut-bg"
+      title="Spinning donut background"
+      aria-hidden="true"
+    ></iframe>
+    <p class="donut-caption">
+      <span class="donut-caption-label">fun fact:</span> I started programming with p5.js, and this donut.c remake was my first cool project.
+    </p>
     <Header currentPath={currentPath} />
     <main class="flex-1 max-w-[var(--spacing-page)] mx-auto px-6 w-full">
       <slot />
@@ -34,3 +41,53 @@ const currentPath = Astro.url.pathname;
     <Footer />
   </body>
 </html>
+
+<style>
+  .donut-bg {
+    position: fixed;
+    top: 0;
+    right: -10%;
+    width: 70vw;
+    height: 100vh;
+    border: none;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.4;
+  }
+
+  @media (max-width: 768px) {
+    .donut-bg {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .donut-bg,
+    .donut-caption {
+      display: none;
+    }
+  }
+
+  .donut-caption {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    max-width: 200px;
+    font-size: 0.65rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+    text-align: right;
+    z-index: 1;
+    opacity: 0.7;
+  }
+
+  .donut-caption-label {
+    font-style: italic;
+  }
+
+  @media (max-width: 1200px) {
+    .donut-caption {
+      display: none;
+    }
+  }
+</style>
