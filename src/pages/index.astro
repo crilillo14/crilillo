@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GenerativeHero from '../components/GenerativeHero.astro';
 import GradientLine from '../components/GradientLine.astro';
 import Socials from '../components/Socials.astro';
 
@@ -19,9 +18,7 @@ function formatDate(date: Date): string {
 ---
 
 <BaseLayout title="Cristobal Lillo">
-  <GenerativeHero seed={2024} height="140px" />
-
-  <div class="max-w-[var(--spacing-prose)]">
+  <div class="max-w-[var(--spacing-prose)] pt-8">
     <!-- Intro -->
     <section class="mb-20">
       <h1 class="font-serif text-4xl font-semibold mb-2 leading-tight">
@@ -41,35 +38,46 @@ function formatDate(date: Date): string {
       <GradientLine seed={11} class="mb-8" />
       <ul class="space-y-8">
         <li>
-          <div class="flex items-baseline justify-between gap-4 mb-1">
+          <div class="flex items-baseline justify-between gap-4">
             <span class="font-serif text-lg font-medium">Examedi</span>
-            <span class="text-sm text-[var(--color-muted)] flex-shrink-0">Jul 2023 - Aug 2024</span>
+            <span class="text-xs text-[var(--color-muted)] flex-shrink-0">Summer 2024</span>
           </div>
-          <p class="text-[var(--color-muted)] text-sm mb-1">Software Engineer Intern</p>
-          <p class="text-[var(--color-text)] text-sm leading-relaxed">
-Interned at Examedi (YC S21 medtech startup), developing Python automation scripts using BS4 and regex to streamline onboarding for clinics and independent practitioners.
-          </p>
-
+          <div class="mt-2 pl-3 border-l border-[var(--color-border)]">
+            <p class="text-[var(--color-text)] text-sm font-medium">Software Engineer Intern</p>
+            <p class="text-[var(--color-muted)] text-xs leading-relaxed mt-1">
+              Interned at Examedi (YC S21 medtech startup), developing internal tooling using BS4 and regex to streamline onboarding for clinics and independent practitioners. Performed geospatial analysis on transaction data to identify underserved regions in Santiago with high patient demand and excessive practitioner travel times.
+            </p>
+          </div>
         </li>
         <li>
-          <div class="flex items-baseline justify-between gap-4 mb-1">
+          <div class="flex items-baseline justify-between gap-4">
             <span class="font-serif text-lg font-medium">SmartUp</span>
-            <span class="text-sm text-[var(--color-muted)] flex-shrink-0">2021 — 2023</span>
+            <span class="text-xs text-[var(--color-muted)] flex-shrink-0">Winter 2024</span>
           </div>
-          <p class="text-[var(--color-muted)] text-sm mb-1">Software Engineer Intern</p>
-          <p class="text-[var(--color-text)] text-sm leading-relaxed">
-            Description of internship work, projects contributed to, and skills developed.
-          </p>
+          <div class="mt-2 pl-3 border-l border-[var(--color-border)]">
+            <p class="text-[var(--color-text)] text-sm font-medium">Software Engineer Intern</p>
+            <p class="text-[var(--color-muted)] text-xs leading-relaxed mt-1">
+              Briefly worked to help augment LLM tooling in internal chats, utilizing the openAI SDK to integrate <b>plotly.js</b> into their Next.js frontend and helping migrate to streaming packets from the completions API.
+            </p>
+          </div>
         </li>
         <li>
-          <div class="flex items-baseline justify-between gap-4 mb-1">
+          <div class="flex items-baseline justify-between gap-4">
             <span class="font-serif text-lg font-medium">University of Miami</span>
-            <span class="text-sm text-[var(--color-muted)] flex-shrink-0">2021 — 2023</span>
+            <span class="text-xs text-[var(--color-muted)] flex-shrink-0">Apr 2025 — Present</span>
           </div>
-          <p class="text-[var(--color-muted)] text-sm mb-1">Software Engineer Intern</p>
-          <p class="text-[var(--color-text)] text-sm leading-relaxed">
-            Description of internship work, projects contributed to, and skills developed.
-          </p>
+          <div class="mt-2 pl-3 border-l border-[var(--color-border)]">
+            <p class="text-[var(--color-text)] text-sm font-medium">Research Assistant, Frost Institute for Data Science and Computing</p>
+            <p class="text-[var(--color-muted)] text-xs leading-relaxed mt-1">
+              Developing a multi-model fusion framework for kidney cancer segmentation using self-attention. Built ETL pipeline for DICOM MRI scans and scaled training across 4 L40 GPUs with PyTorch DDP. Third author on forthcoming publication.
+            </p>
+          </div>
+          <div class="mt-3 pl-3 border-l border-[var(--color-border)]">
+            <p class="text-[var(--color-text)] text-sm font-medium">Teaching Assistant, Department of Computer Science</p>
+            <p class="text-[var(--color-muted)] text-xs leading-relaxed mt-1">
+              Guiding 500+ students through labs and office hours for Computer Programming II, teaching data structures, algorithms, and OOP in Java and Python. Automated grading workflows by refactoring legacy Python 2.7 scripts.
+            </p>
+          </div>
         </li>
       </ul>
     </section>
@@ -85,14 +93,14 @@ Interned at Examedi (YC S21 medtech startup), developing Python automation scrip
           <a href="#" class="block">
             <div class="flex items-baseline justify-between gap-4">
               <span class="font-serif text-lg font-medium group-hover:text-[var(--color-accent)] transition-colors duration-150">
-                Project Name
+                tinyHPO
               </span>
               <span class="text-xs text-[var(--color-muted)] font-mono flex-shrink-0">
-                Python / C++
+                Python / tinygrad / wandb
               </span>
             </div>
             <p class="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
-              Brief description of what this project does and why it's interesting.
+              Hyperparameter optimization tools for the tinygrad framework (30k stars). Model-agnostic GridSearchCV and Bayesian optimization APIs with lazy evaluation via tinyJIT.
             </p>
           </a>
         </li>
@@ -100,29 +108,14 @@ Interned at Examedi (YC S21 medtech startup), developing Python automation scrip
           <a href="#" class="block">
             <div class="flex items-baseline justify-between gap-4">
               <span class="font-serif text-lg font-medium group-hover:text-[var(--color-accent)] transition-colors duration-150">
-                Another Project
+                Graph-Based HRM
               </span>
               <span class="text-xs text-[var(--color-muted)] font-mono flex-shrink-0">
-                Rust
+                PyTorch / OR-Tools
               </span>
             </div>
             <p class="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
-              Description highlighting the technical challenges solved or novel approach taken.
-            </p>
-          </a>
-        </li>
-        <li class="group">
-          <a href="#" class="block">
-            <div class="flex items-baseline justify-between gap-4">
-              <span class="font-serif text-lg font-medium group-hover:text-[var(--color-accent)] transition-colors duration-150">
-                Third Project
-              </span>
-              <span class="text-xs text-[var(--color-muted)] font-mono flex-shrink-0">
-                TypeScript
-              </span>
-            </div>
-            <p class="text-sm text-[var(--color-muted)] mt-1 leading-relaxed">
-              What problem does this solve? What makes it unique?
+              Adapting the HRM architecture for NP-hard graph-based CSPs. Sparse edge embeddings with combined supervised and reinforcement learning for improved convergence.
             </p>
           </a>
         </li>
@@ -139,14 +132,16 @@ Interned at Examedi (YC S21 medtech startup), developing Python automation scrip
         <li>
           <div class="flex items-baseline justify-between gap-4 mb-3">
             <span class="font-serif text-lg font-medium">University of Miami</span>
-            <span class="text-sm text-[var(--color-muted)] flex-shrink-0">Expected Spring 2027</span>
+            <span class="text-xs text-[var(--color-muted)] flex-shrink-0">Expected May 2027</span>
           </div>
-          <p class="text-[var(--color-muted)] text-sm mb-1">B.S. in Computer Science & Mathematics</p>
-          <p class="text-[var(--color-text)] text-sm leading-relaxed">
-          <p>Honors: </p>
-          <sup>coruse</sup>
+          <p class="text-[var(--color-text)] text-sm font-medium">B.S. Computer Science, B.S. Mathematics</p>
+          <p class="text-[var(--color-muted)] text-xs mt-1">Minor in Physics</p>
+          <p class="text-[var(--color-muted)] text-xs leading-relaxed mt-2">
+            GPA: 3.86 · Singer Scholar (Full Tuition) · Foote Fellow Honors Program · <a href="/transcript.pdf" class="no-underline hover:underline underline-offset-2 hover:text-[var(--color-muted)]">Transcript</a>
           </p>
-
+          <p class="text-[var(--color-muted)] text-xs leading-relaxed mt-2">
+          Relevant coursework: Data Structures & Algorithms, Machine Learning, Stochastic Modeling, Statistical Analysis, Probability Theory, Game Theory.
+          </p>
         </li>
       </ul>
     </section>

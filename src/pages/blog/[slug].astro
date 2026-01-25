@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostHeader from '../../components/PostHeader.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -24,9 +23,7 @@ function formatDate(date: Date): string {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <PostHeader title={post.data.title} />
-
-  <article class="max-w-[var(--spacing-prose)]">
+  <article class="max-w-[var(--spacing-prose)] pt-8">
 
     <header class="mb-10">
       <time
