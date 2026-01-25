@@ -24,8 +24,9 @@ function formatDate(date: Date): string {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
+  <PostHeader title={post.data.title} />
+
   <article class="max-w-[var(--spacing-prose)]">
-    <PostHeader title={post.data.title} />
 
     <header class="mb-10">
       <time

@@ -7,9 +7,9 @@ interface Props {
 const { seed = 42, height = '160px' } = Astro.props;
 
 const hue1 = (seed * 137.508) % 360;
-const hue2 = (hue1 + 35) % 360;
-const hue3 = (hue1 + 200) % 360;
-const turbulenceFreq = 0.003 + (seed % 10) * 0.0003;
+const hue2 = (hue1 + 270) % 360;
+const hue3 = (hue1 + 60) % 360;
+const turbulenceFreq = 0.8 + (seed % 10) * 0.0003;
 ---
 
 <div class="generative-hero" style={`height: ${height};`}>
