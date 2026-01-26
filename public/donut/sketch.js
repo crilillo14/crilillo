@@ -2,7 +2,7 @@ const deg = 180;
 let orig = [];
 let x, y, z, xp, yp;
 
-const zp = 1500;
+const zp = 1200;
 const dtheta = 10;
 const dalpha = 10;
 const dbeta = 0.1;
