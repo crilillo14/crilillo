@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   site : "https://crilillo.me",
-  base : "/",
+  base : "/crilillo",
   output: 'static',
 
   vite: {
