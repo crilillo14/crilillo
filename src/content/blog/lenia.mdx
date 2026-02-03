@@ -1,0 +1,47 @@
+---
+title: "Parallelized Lenia"
+description: "Lenia written with CUDA kernels."
+date: 2026-01-03
+tags: ["meta", "first-post"]
+githubUrl: "https://github.com/crilillo14/cudaproj/tree/main/cellular/lenia/leniaCUDA"
+---
+
+
+
+
+<p align="center" style="width: 100%; max-width: 100%;">
+<img src="/lenia.gif" style="width: 50%; max-width: 100%; height: auto;"></img>
+</p>
+
+
+
+
+Lenia is a very sensible continuation of Conway's Game of Life, extending the possible states of a single cell to the rationals in the range [0, 1].
+
+
+You can check out the [original paper](https://arxiv.org/abs/1812.05433) for more details, it's pretty short, and contains a lot of cool emergent phenomena.
+
+DEFINITELY watch this, which started it all for me: [Lenia: Expanded Universe 1080p](https://www.youtube.com/watch?v=HT49wpyux-k&list=RDHT49wpyux-k&start_radio=1).
+
+
+text, text, text...
+
+```cpp
+__device__ void convolution(double *C, double *kernel, int i, int j, double *result , double kernelMax) {
+    int kernelSize = 2 * RADIUS + 1;
+    double sum = 0.0;
+    for (int ki = -RADIUS; ki <= RADIUS; ki++) {
+        for (int kj = -RADIUS; kj <= RADIUS; kj++) {
+            int ni = i + ki;
+            int nj = j + kj;
+            if (ni >= 0 && ni < N && nj >= 0 && nj < N) {
+                sum += C[ni * N + nj] * kernel[(ki + RADIUS) * kernelSize + (kj + RADIUS)];
+            }
+        }
+    }
+    *result = sum / kernelMax;
+}
+```
+
+
+
